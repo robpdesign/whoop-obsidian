@@ -1,0 +1,76 @@
+/* whoop-health.css
+   Drop this into your vault's .obsidian/snippets/ folder
+   and enable it in Settings → Appearance → CSS Snippets
+*/
+
+.whoop-card {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  background: #1e1e1e;
+  border: 1px solid #3a3a3a;
+  border-radius: 6px;
+  padding: 20px 24px;
+  color: #d4d0c8;
+  max-width: 520px;
+}
+.whoop-card .wc-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.whoop-card .wc-section {
+  font-size: 11px;
+  color: #888880;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 12px 0 8px;
+}
+.whoop-card .wc-row {
+  display: grid;
+  grid-template-columns: 80px 70px 1fr 14px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+.whoop-card .wc-val { text-align: right; }
+.whoop-card .wc-bar-bg {
+  background: #3a3a3a;
+  height: 9px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.whoop-card .wc-bar-solid {
+  height: 100%;
+  background: #c8c4b8;
+  border-radius: 2px;
+}
+.whoop-card .wc-bar-dot {
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    90deg, #c8c4b8 0px, #c8c4b8 3px, transparent 3px, transparent 6px
+  );
+}
+.whoop-card .up   { color: #7ab87a; }
+.whoop-card .down { color: #c47a7a; }
+.whoop-card .flat { color: #888880; }
+.whoop-card .wc-divider {
+  border: none;
+  border-top: 1px solid #3a3a3a;
+  margin: 12px 0;
+}
+.whoop-card .wc-footer {
+  font-size: 12px;
+  color: #888880;
+  line-height: 1.9;
+}
+.whoop-card .wc-footer span { color: #d4d0c8; }
+.whoop-badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 1px 7px;
+  border-radius: 3px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.wc-recovery { background: #2a3a2a; color: #7ab87a; border: 1px solid #3a5a3a; }
+.wc-strain   { background: #2a2a3a; color: #7a7ab8; border: 1px solid #3a3a5a; }
