@@ -54,7 +54,7 @@ TREND_WINDOW  = 7   # days of history for rolling trend computation
 API_BASE  = "https://api.prod.whoop.com/developer"
 AUTH_URL  = "https://api.prod.whoop.com/oauth/oauth2/auth"
 TOKEN_URL = "https://api.prod.whoop.com/oauth/oauth2/token"
-SCOPES    = "read:recovery read:sleep read:cycles"
+SCOPES    = "offline read:recovery read:sleep read:cycles"
 
 # ─── PERSONAL BASELINES ────────────────────────────────────────────────────────
 # Bar widths are calculated as (value / max) * 100%.
