@@ -264,10 +264,19 @@ def ms_to_mins(ms: int) -> int:
     return ms // 60000
 
 def get_yesterdays_data() -> dict:
-    yesterday = date.today() - timedelta(days=1)
+    # Use local date so timezone offsets (e.g. AEST UTC+11) don't cause
+    # the script to fetch the wrong cycle when running in the morning.
+    local_now = datetime.now()
+    yesterday = local_now.date() - timedelta(days=1)
 
     def on_yesterday(iso_str: str) -> bool:
-        return bool(iso_str) and dateparser.parse(iso_str).date() == yesterday
+        if not iso_str:
+            return False
+        # Parse the timestamp and convert to local time before comparing
+        dt = dateparser.parse(iso_str)
+        if dt.tzinfo is not None:
+            dt = dt.astimezone().replace(tzinfo=None)
+        return dt.date() == yesterday
 
     recoveries = fetch_recent("/v2/recovery")
     cycles     = fetch_recent("/v2/cycle")
