@@ -264,37 +264,25 @@ def ms_to_mins(ms: int) -> int:
     return ms // 60000
 
 def get_yesterdays_data() -> dict:
-    # Use local date so timezone offsets (e.g. AEST UTC+11) don't cause
-    # the script to fetch the wrong cycle when running in the morning.
-    local_now = datetime.now()
-    yesterday = local_now.date() - timedelta(days=1)
-
-    def on_yesterday(iso_str: str) -> bool:
-        if not iso_str:
-            return False
-        # Parse the timestamp and convert to local time before comparing
-        dt = dateparser.parse(iso_str)
-        if dt.tzinfo is not None:
-            dt = dt.astimezone().replace(tzinfo=None)
-        return dt.date() == yesterday
-
+    # Fetch the most recent scored recovery and cycle.
+    # We avoid date-matching entirely because Whoop cycle timestamps are in UTC
+    # and can fall on a different calendar date to local time (e.g. AEST = UTC+11),
+    # causing the wrong cycle to be selected when running in the morning.
     recoveries = fetch_recent("/v2/recovery")
     cycles     = fetch_recent("/v2/cycle")
 
     recovery = next(
-        (r for r in recoveries
-         if r.get("score_state") == "SCORED" and on_yesterday(r.get("created_at", ""))),
+        (r for r in recoveries if r.get("score_state") == "SCORED"),
         None,
     )
     cycle = next(
-        (c for c in cycles
-         if c.get("score_state") == "SCORED" and on_yesterday(c.get("end", ""))),
+        (c for c in cycles if c.get("score_state") == "SCORED"),
         None,
     )
 
     if not recovery:
         sys.exit(
-            f"No scored recovery data found for {yesterday}. "
+            "No scored recovery data found. "
             "Device may still be syncing — try again in 30 minutes."
         )
 
